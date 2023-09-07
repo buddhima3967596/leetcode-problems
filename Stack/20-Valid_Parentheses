@@ -1,0 +1,63 @@
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        
+        pstack=list()
+        
+        if len(s)==1:
+            return False
+        
+        for bracket in s:
+            if bracket=='(' or bracket=='[' or bracket=='{':
+                pstack.append(bracket)
+            elif len(pstack)==0:
+                return False
+            elif bracket==')':
+                if pstack.pop()!='(':
+                    return False
+                continue
+            elif bracket==']':
+                 if pstack.pop()!='[':
+                    return False
+                 continue
+            elif bracket=='}':
+                if pstack.pop()!='{':
+                    return False
+                continue
+        if len(pstack)==0:
+            return True
+        return False
+    
+    def NCIsValid(self,s):
+        # Can't start with closing parenthesis
+        # Time:O(n)
+        # Space: O(n)
+        pLegend={')':'(',']':"[","}":"{"}
+        pstack=[]
+        
+        if len(s)==1:
+            return False
+
+        for bracket in s:
+            if bracket in pLegend:
+                if pstack and pstack[-1] == pLegend[bracket]:
+                    # Check that the current character is the equivalent /
+                    # closing bracket for the item on top of the stack
+                        pstack.pop()
+                else:
+                        return False
+            else:
+                pstack.append(bracket)
+                
+        if len(pstack)==0:
+            return True
+        return False
+        
+        
+
+if __name__=='__main__':
+    test=Solution()
+    print(test.isValid("(]"))
